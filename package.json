@@ -13,6 +13,18 @@
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\""
   },
   "dependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "bcryptjs": "^3.0.3",
+    "jsonwebtoken": "^9.0.3",
+    "socket.io": "^4.7.5",
+    "helmet": "^8.1.0",
+    "compression": "^1.8.1",
+    "cloudinary": "^1.41.3",
+    "multer": "^2.1.1",
+    "multer-storage-cloudinary": "^4.0.0"
   }
 }
