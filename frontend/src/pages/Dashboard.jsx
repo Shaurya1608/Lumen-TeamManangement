@@ -5,7 +5,9 @@ import TaskBoard from '../components/TaskBoard';
 import { Plus, X, AlertCircle, CheckCircle, Loader, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const API = 'http://localhost:5000';
+import { API_URL } from '../config';
+
+const API = API_URL;
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);

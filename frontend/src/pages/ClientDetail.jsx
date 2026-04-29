@@ -8,7 +8,9 @@ import { ArrowLeft, Pencil, Check, X, Plus, Trash2, TrendingUp, TrendingDown, Cl
 import { motion, AnimatePresence } from 'framer-motion';
 import { generateSingleInvoice, generateFullStatement } from '../utils/ReportUtils';
 
-const API = 'http://localhost:5000';
+import { API_URL } from '../config';
+
+const API = API_URL;
 const inp = "bg-dark-800 border border-dark-700 rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:border-brand-blue/50 transition-colors";
 
 export default function ClientDetail() {
@@ -152,7 +154,7 @@ export default function ClientDetail() {
     const updatedMilestones = [...proj.milestones];
     updatedMilestones[mIdx].completed = !updatedMilestones[mIdx].completed;
     try {
-      await fetch(`http://localhost:5000/api/projects/${projId}`, {
+      await fetch(`${API}/api/projects/${projId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ milestones: updatedMilestones })
@@ -166,7 +168,7 @@ export default function ClientDetail() {
     const proj = projects.find(p => p._id === projId);
     const updatedMilestones = [...(proj.milestones || []), { title, completed: false }];
     try {
-      await fetch(`http://localhost:5000/api/projects/${projId}`, {
+      await fetch(`${API}/api/projects/${projId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ milestones: updatedMilestones })

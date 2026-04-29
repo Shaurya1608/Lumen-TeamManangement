@@ -4,7 +4,9 @@ import { useAuth } from '../context/AuthContext';
 import { UserPlus, Activity, Users, CheckCircle, Shield, Layers } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const API = 'http://localhost:5000';
+import { API_URL } from '../config';
+
+const API = API_URL;
 
 const ROLES = [
   { value: 'member', label: '👤 Member', cls: 'bg-slate-700/50 text-slate-300 border-slate-600' },

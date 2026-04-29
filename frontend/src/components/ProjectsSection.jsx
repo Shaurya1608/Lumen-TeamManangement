@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Plus, Trash2, Pencil, X, Check, FolderOpen, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const API = 'http://localhost:5000';
+import { API_URL } from '../config';
+
+const API = API_URL;
 const inputClass = "bg-dark-800 border border-dark-700 rounded-xl px-4 py-2 text-sm text-white outline-none focus:border-brand-blue/50 transition-colors";
 
 export default function ProjectsSection({ client, projects, transactions, token }) {

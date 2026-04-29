@@ -3,9 +3,10 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { UserPlus, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { API_URL } from '../config';
 
 export default function Signup() {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'member' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -17,12 +18,10 @@ export default function Signup() {
     setLoading(true);
     
     try {
-      const role = formData.name.toLowerCase() === 'admin' ? 'admin' : 'member';
-
-      const res = await fetch('http://localhost:5000/api/auth/signup', {
+      const res = await fetch(`${API_URL}/api/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, role })
+        body: JSON.stringify(formData)
       });
       
       const data = await res.json();

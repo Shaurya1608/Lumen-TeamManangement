@@ -6,7 +6,9 @@ const SocketContext = createContext();
 export const useSocket = () => useContext(SocketContext);
 
 // Connecting to local backend at port 5000
-const socket = io('http://localhost:5000', {
+import { API_URL } from '../config';
+
+const socket = io(API_URL, {
   autoConnect: false
 });
 

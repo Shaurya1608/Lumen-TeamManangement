@@ -4,7 +4,9 @@ import { useSocket } from '../context/SocketContext';
 import { Compass, Users, Clock, CheckCircle, LogIn } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const API = 'http://localhost:5000';
+import { API_URL } from '../config';
+
+const API = API_URL;
 
 export default function GroupsBrowse() {
   const { user, token } = useAuth();

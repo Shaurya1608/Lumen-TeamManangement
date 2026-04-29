@@ -6,6 +6,10 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import helmet from 'helmet';
+import compression from 'compression';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import User from './models/User.js';
 import Task from './models/Task.js';
 import Group from './models/Group.js';
@@ -19,12 +23,30 @@ import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 dotenv.config();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'] } });
+const io = new Server(server, { 
+  cors: { 
+    origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'] 
+  } 
+});
 
-app.use(cors());
+app.use(helmet({
+  contentSecurityPolicy: false, // Disable if you're serving frontend and it has issues with inline scripts
+}));
+app.use(compression());
+app.use(cors({
+  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*',
+}));
 app.use(express.json());
+
+// Serve static files from the frontend/dist folder
+const frontendDistPath = path.join(__dirname, '../../frontend/dist');
+app.use(express.static(frontendDistPath));
 
 // Cloudinary config
 cloudinary.config({
@@ -469,6 +491,11 @@ app.post('/api/upload', auth, upload.single('image'), async (req, res) => {
 io.on('connection', socket => {
   console.log('Connected:', socket.id);
   socket.on('disconnect', () => console.log('Disconnected:', socket.id));
+});
+
+// Handle client-side routing - MUST be after all API routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendDistPath, 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;

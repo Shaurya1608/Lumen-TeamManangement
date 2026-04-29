@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { generateMonthlyReport } from '../utils/ReportUtils';
 import { Search, Filter, Download } from 'lucide-react';
 
-const API = 'http://localhost:5000';
+import { API_URL } from '../config';
+
+const API = API_URL;
 
 export default function BusinessDashboard() {
   const [clients, setClients] = useState([]);
